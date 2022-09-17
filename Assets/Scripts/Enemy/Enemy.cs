@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    public TypeOfBullet bulletElement;
     public GameObject target;
     public GameObject bulletPrefab;
 
@@ -17,15 +18,17 @@ public class Enemy : MonoBehaviour, IDamagable
     public float offset;
     public void Movement()
     {
-        transform.LookAt(target.transform.position);
+        transform.forward = -target.transform.forward;
         transform.position = new Vector3(transform.position.x, offset, transform.position.z);
         transform.position += transform.forward * speed * Time.deltaTime;
     }
     public virtual void LateralMovement()
     {
         counterTime += 1 * Time.deltaTime;
-        transform.LookAt(target.transform.position);
-        transform.RotateAround(target.transform.position, transform.up, speed / 2 * Time.deltaTime);
+        transform.forward = -target.transform.forward;
+        //transform.LookAt(target.transform.position);
+        //transform.RotateAround(target.transform.position, transform.up, speed / 2 * Time.deltaTime);
+        transform.position += transform.right * speed * Time.deltaTime;
         if (counterTime >= 3)
         {
             speed *= -1;

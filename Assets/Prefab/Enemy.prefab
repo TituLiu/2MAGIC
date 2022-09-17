@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d884d1cd81ff24383a0b23a0a91b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletElement: 1
   target: {fileID: 0}
   bulletPrefab: {fileID: 4590395769977535951, guid: b229ab5db067ca04abb9855e3f11f927,
     type: 3}
@@ -91,6 +92,7 @@ MonoBehaviour:
   dead: 1
   revive: 0
   offset: 1
+  shootDir: 45
 --- !u!54 &1210747795905466751
 Rigidbody:
   m_ObjectHideFlags: 0

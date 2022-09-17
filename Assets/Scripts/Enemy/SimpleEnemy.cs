@@ -6,12 +6,28 @@ public class SimpleEnemy : Enemy
 {
     delegate void Delegate();
     Delegate _MyDelegate;
+    [SerializeField] float shootDir;
     private void Awake()
     {
         target = FindObjectOfType<Castle>().gameObject;
     }
     void Start()
     {
+        int randomElement = Random.Range(0, 3);
+        switch (randomElement)
+        {
+            case 0:
+                bulletElement = TypeOfBullet.Fire;
+                break;
+            case 1:
+                bulletElement = TypeOfBullet.Water;
+                break;
+            case 2:
+                bulletElement = TypeOfBullet.Ice;
+                break;
+            default:
+                break;
+        }
         EventManager.Instance.Subscribe("OnRevive", Die);
         dead = false;
         revive = false;
@@ -27,7 +43,12 @@ public class SimpleEnemy : Enemy
     }
     public override void Shoot()
     {
-        base.Shoot();
+        transform.rotation = Quaternion.Euler(0, -180 + Random.Range(-shootDir, shootDir), 0);
+        var bullet = bulletPool.Get();
+        bullet.bulletElement = bulletElement;
+        bullet.transform.rotation = transform.rotation;
+        bullet.transform.position = transform.position;
+
         _MyDelegate = Stay;
         StartCoroutine(TimeUntilContinue());
     }

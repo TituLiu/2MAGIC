@@ -1,10 +1,14 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
     public int simpleEnemyChanse;
-    public Transform[] spawnPoint;
+    public int spawnPointsNum;
+    public int spawnPointsDistanceOffset;
+    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private List<GameObject> spawnPointList;
     public int enemyCounter;
     public float spawnRate, spawnRateIncrease;
     public bool alreadySpawn = false;
@@ -15,7 +19,18 @@ public class WaveManager : MonoBehaviour
     public EnemySpawner enemySpawner = new EnemySpawner();
     public KamikazeSpawner enemyKamikazeSpawner = new KamikazeSpawner();
 
-
+    private void Awake()
+    {
+        spawnPointList.Add(spawnPoint);
+        for (int i = 0; i < spawnPointsNum; i++)
+        {
+            var currentPos = spawnPointList[i];
+            var obj = Instantiate(spawnPoint, transform);
+            obj.transform.position = new Vector3
+                (currentPos.transform.position.x + spawnPointsDistanceOffset, spawnPoint.transform.position.y, spawnPoint.transform.position.z);
+            spawnPointList.Add(obj);
+        }
+    }
     private void Start()
     {
         enemyPool = new Pool<SimpleEnemy>(enemySpawner.Create, enemySpawner.TurnOffObject, enemySpawner.TurnOnObject, 8);
@@ -30,14 +45,14 @@ public class WaveManager : MonoBehaviour
             if (Random.Range(1,11) <= simpleEnemyChanse)
             {
                 var enemy = enemyPool.Get();
-                enemy.transform.position = spawnPoint[Random.Range(0, spawnPoint.Length)].position;
+                enemy.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].transform.position;
                 enemyCounter++;
                 StartCoroutine(WaveSpawner());
             }
             else
             {
                 var enemy = enemyKamikazePool.Get();
-                enemy.transform.position = spawnPoint[Random.Range(0, spawnPoint.Length)].position;
+                enemy.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].transform.position;
                 enemyCounter++;
                 StartCoroutine(WaveSpawner());
             }

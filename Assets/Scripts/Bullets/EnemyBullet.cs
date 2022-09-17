@@ -10,10 +10,27 @@ public class EnemyBullet : BulletFather
         _MyDelegate = Movement;
         mr = meshObject.GetComponent<MeshRenderer>();
         randomNumber = Random.Range(1, 11);
-        if (randomNumber <= 5) bulletIntensity = 1;
-        else if (randomNumber > 5 && randomNumber <= 8) bulletIntensity = 2;
-        else bulletIntensity = 3;
+        //if (randomNumber <= 5) bulletIntensity = 1;
+        //else if (randomNumber > 5 && randomNumber <= 8) bulletIntensity = 2;
+        //else bulletIntensity = 3;
 
+        switch (bulletElement)
+        {
+            case TypeOfBullet.Fire:
+                mr.material.color = Color.red;
+                mr.material.SetColor("_EmissionColor", Color.red);
+                break;
+            case TypeOfBullet.Water:
+                mr.material.color = Color.blue;
+                mr.material.SetColor("_EmissionColor", Color.blue);
+                break;
+            case TypeOfBullet.Ice:
+                mr.material.color = Color.cyan;
+                mr.material.SetColor("_EmissionColor", Color.cyan);
+                break;
+            default:
+                break;
+        }
         switch (bulletIntensity)
         {
             case 1:

@@ -8,14 +8,14 @@ public class FlyWeightPointer : MonoBehaviour
     {
         maxLife = 1, 
         maxSpeed = 30,
-        minDistance = 25,
-        maxDistance = 56
+        minDistance = 90,
+        maxDistance = 100
     };
     public static FlyWeight kamikazeEnemyStats = new FlyWeight()
     {
         maxLife = 1,
         maxSpeed = 45,
         minDistance = 15,
-        maxDistance = 36
+        maxDistance = 20
     };
 }
