@@ -16,15 +16,15 @@ public class EnemyBullet : BulletFather
 
         switch (bulletElement)
         {
-            case TypeOfBullet.Fire:
+            case Element.Fire:
                 mr.material.color = Color.red;
                 mr.material.SetColor("_EmissionColor", Color.red);
                 break;
-            case TypeOfBullet.Water:
+            case Element.Water:
                 mr.material.color = Color.blue;
                 mr.material.SetColor("_EmissionColor", Color.blue);
                 break;
-            case TypeOfBullet.Ice:
+            case Element.Ice:
                 mr.material.color = Color.cyan;
                 mr.material.SetColor("_EmissionColor", Color.cyan);
                 break;

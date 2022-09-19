@@ -17,13 +17,13 @@ public class SimpleEnemy : Enemy
         switch (randomElement)
         {
             case 0:
-                bulletElement = TypeOfBullet.Fire;
+                bulletElement = Element.Fire;
                 break;
             case 1:
-                bulletElement = TypeOfBullet.Water;
+                bulletElement = Element.Water;
                 break;
             case 2:
-                bulletElement = TypeOfBullet.Ice;
+                bulletElement = Element.Ice;
                 break;
             default:
                 break;

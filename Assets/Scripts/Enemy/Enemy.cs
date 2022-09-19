@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
-    public TypeOfBullet bulletElement;
+    public Element bulletElement;
     public GameObject target;
     public GameObject bulletPrefab;
 

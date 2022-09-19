@@ -72,7 +72,7 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
         currentElement = element.Element;
         switch (currentElement)
         {
-            case BarrierElement.Fire:
+            case BarrierElement.Fire:               
                 mr.material.color = Color.red;
                 mr.material.SetColor("_EmissionColor", Color.red);
                 break;

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TypeOfBullet {Fire, Water, Ice};
+public enum Element {Fire, Water, Ice};
 public class BulletFather : MonoBehaviour, IPublisher
 {
-    public TypeOfBullet bulletElement;
+    public Element bulletElement;
     private List<ISubscriber> _subscribers = new List<ISubscriber>();
     public int bulletIntensity, intensity, randomNumber;
     public float speedBullet = 2;

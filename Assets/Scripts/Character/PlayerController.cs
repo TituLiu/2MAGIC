@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     //        view.ChangeColorGreen();
     //    }
     //}
+
     public void Movement(float x, float z)
     {
         //transform.rotation = Quaternion.LookRotation(barrier.right);
