@@ -12,6 +12,7 @@ public class BulletFather : MonoBehaviour, IPublisher
     public int timer = 10;
     public float counter = 10;
     public bool particlesOn = false;
+    [SerializeField] protected LayerMask _bounceMask;
     public MeshRenderer mr;
     public Rigidbody rb;
     public delegate void ChangeTypeBullet();
@@ -25,6 +26,7 @@ public class BulletFather : MonoBehaviour, IPublisher
     private void Start()
     {
         EventManager.Instance.Subscribe("OnRevive", Reset);
+        rb = GetComponent<Rigidbody>();
     }
     public virtual void Reset(params object[] parameters)
     {
@@ -35,7 +37,7 @@ public class BulletFather : MonoBehaviour, IPublisher
     public void Movement()
     {
         transform.position = new Vector3(transform.position.x, 2, transform.position.z);
-        transform.position += transform.forward * speedBullet * Time.deltaTime;
+        rb.velocity = transform.forward * speedBullet;
     }
     #region BulletFunctions
     public void NormalBullet()
@@ -82,16 +84,18 @@ public class BulletFather : MonoBehaviour, IPublisher
         }
         var reflectable = collision.gameObject.GetComponent<IAffect>();
         var barrierIntensity = collision.gameObject.GetComponent<IBarrier>();
-        if (reflectable != null )
+        if (reflectable != null)
         {
             if (barrierIntensity.Intensity() >= bulletIntensity)
             {
                 var direction = Vector3.Reflect(transform.forward, collision.GetContact(0).normal);
                 reflectable.Touch(direction, transform.position, bulletIntensity);
                 gameObject.SetActive(false);
+                Debug.Log("rebote");
             }
             else StartCoroutine(ColliderOff());
         }
+
     }
     IEnumerator ColliderOff()
     {

@@ -11,6 +11,7 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
         Ice
     }
     public BarrierElement currentElement;
+
     MeshRenderer mr;
     [SerializeField]
     int distanceLimit;
@@ -69,7 +70,7 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
     //}
     public void ChangeElement(EnumElement element)
     {
-        currentElement = element.Element;
+        currentElement = element.BarrierElement;
         switch (currentElement)
         {
             case BarrierElement.Fire:               

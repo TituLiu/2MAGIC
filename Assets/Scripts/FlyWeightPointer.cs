@@ -7,7 +7,7 @@ public class FlyWeightPointer : MonoBehaviour
     public static FlyWeight simpleEnemyStats = new FlyWeight()
     {
         maxLife = 1, 
-        maxSpeed = 30,
+        maxSpeed = 10,
         minDistance = 90,
         maxDistance = 100
     };

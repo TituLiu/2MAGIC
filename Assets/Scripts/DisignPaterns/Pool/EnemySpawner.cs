@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    EnemyFactory _bulletFactory = new EnemyFactory();
+    EnemyFactory _enemyFactory = new EnemyFactory();
     public GameObject enemy;
 
     public SimpleEnemy TurnOnObject(SimpleEnemy b)
@@ -19,6 +19,6 @@ public class EnemySpawner : MonoBehaviour
     }
     public SimpleEnemy Create()
     {
-        return _bulletFactory.Create(enemy);
+        return _enemyFactory.Create(enemy);
     }
 }

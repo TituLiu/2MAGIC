@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected Transform pos1, pos2;
+    [SerializeField] protected float dist;
     public Element bulletElement;
     public GameObject target;
     public GameObject bulletPrefab;
@@ -16,24 +19,25 @@ public class Enemy : MonoBehaviour, IDamagable
     public bool dead;
     public bool revive;
     public float offset;
+    [SerializeField] protected Vector3 targetDir;
     public void Movement()
     {
-        transform.forward = -target.transform.forward;
-        transform.position = new Vector3(transform.position.x, offset, transform.position.z);
-        transform.position += transform.forward * speed * Time.deltaTime;
-    }
-    public virtual void LateralMovement()
-    {
-        counterTime += 1 * Time.deltaTime;
-        transform.forward = -target.transform.forward;
-        //transform.LookAt(target.transform.position);
-        //transform.RotateAround(target.transform.position, transform.up, speed / 2 * Time.deltaTime);
-        transform.position += transform.right * speed * Time.deltaTime;
-        if (counterTime >= 3)
+        //transform.forward = -target.transform.forward;
+        //transform.position = new Vector3(transform.position.x, offset, transform.position.z);
+        //transform.position += transform.forward * speed * Time.deltaTime;
+
+        rb.velocity = transform.forward * speed;
+        if (Vector3.Distance(transform.position, targetDir) < dist)
         {
-            speed *= -1;
-            counterTime = 0;
+            //Shoot();
+            ChangeTargetDir();
         }
+    }
+    public void ChangeTargetDir()
+    {
+        targetDir = new Vector3(Random.Range(pos1.position.x , pos2.position.x), transform.position.y, Random.Range(pos1.position.z, pos2.position.z));
+        var newDir = targetDir - transform.position;
+        transform.forward = newDir;
     }
     public void Stay() { }
     public virtual void CheckDistance()

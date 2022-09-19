@@ -34,10 +34,12 @@ public class SimpleEnemy : Enemy
         bulletPool = new Pool<BulletFather>(bulletSpawner.Create, bulletSpawner.TurnOffObject, bulletSpawner.TurnOnObject, 2);
         life = FlyWeightPointer.simpleEnemyStats.maxLife;
         speed = FlyWeightPointer.simpleEnemyStats.maxSpeed;
-        _MyDelegate = CheckDistance;
-        _MyDelegate += Movement;
+
+        ChangeTargetDir();
+        StartCoroutine(ShootCD());
+        _MyDelegate = Movement;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         _MyDelegate();
     }
@@ -48,7 +50,7 @@ public class SimpleEnemy : Enemy
         bullet.bulletElement = bulletElement;
         bullet.transform.rotation = transform.rotation;
         bullet.transform.position = transform.position;
-
+        rb.velocity = Vector3.zero;
         _MyDelegate = Stay;
         StartCoroutine(TimeUntilContinue());
     }
@@ -57,24 +59,21 @@ public class SimpleEnemy : Enemy
         yield return new WaitForSeconds(Random.Range(7,11));
         _MyDelegate = Shoot;
     }
-    public override void LateralMovement()
-    {
-        base.LateralMovement();    
-    }
     IEnumerator TimeUntilContinue()
     {
         yield return new WaitForSeconds(3);
-        _MyDelegate = LateralMovement;
+        ChangeTargetDir();
+        _MyDelegate = Movement;
         StartCoroutine(ShootCD());
     }
-    public override void CheckDistance()
-    {
-        base.CheckDistance();
-        if (distance <= Random.Range(FlyWeightPointer.simpleEnemyStats.minDistance, FlyWeightPointer.simpleEnemyStats.maxDistance))
-        {
-            _MyDelegate = Shoot;
-        }
-    }
+    //public override void CheckDistance()
+    //{
+    //    base.CheckDistance();
+    //    if (distance <= Random.Range(FlyWeightPointer.simpleEnemyStats.minDistance, FlyWeightPointer.simpleEnemyStats.maxDistance))
+    //    {
+    //        _MyDelegate = Shoot;
+    //    }
+    //}
     public override void Reset()
     {
         base.Reset();

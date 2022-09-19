@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class EnumElement : MonoBehaviour
 {
-    public Barrier.BarrierElement Element;
+    public Barrier.BarrierElement BarrierElement;
+    public PlayerView.PlayerElement PlayerElement;
 }

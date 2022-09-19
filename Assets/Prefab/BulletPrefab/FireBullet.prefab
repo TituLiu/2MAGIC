@@ -112,8 +112,11 @@ MonoBehaviour:
   timer: 10
   counter: 10
   particlesOn: 0
+  _bounceMask:
+    serializedVersion: 2
+    m_Bits: 262144
   mr: {fileID: 0}
-  rb: {fileID: 0}
+  rb: {fileID: -8911263463583891600}
   meshObject: {fileID: 1530997602211002309}
   explotionArea: {fileID: 215287594753466943}
 --- !u!54 &-8911263463583891600

@@ -51,7 +51,7 @@ public class EnemyBullet : BulletFather
     {
         gameObject.SetActive(false);
     }
-    void Update()
+    private void FixedUpdate()
     {
         _MyDelegate();
     }

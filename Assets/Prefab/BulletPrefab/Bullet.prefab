@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c28b6e02513884aad5187a9be771a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changeBullet: 0
+  bulletElement: 0
   bulletIntensity: 0
   intensity: 0
   randomNumber: 0
@@ -54,8 +54,11 @@ MonoBehaviour:
   timer: 10
   counter: 10
   particlesOn: 0
+  _bounceMask:
+    serializedVersion: 2
+    m_Bits: 262144
   mr: {fileID: 0}
-  rb: {fileID: 0}
+  rb: {fileID: 8799359323054527501}
   meshObject: {fileID: 8155800683320044414}
 --- !u!54 &8799359323054527501
 Rigidbody:
@@ -183,6 +186,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894095680436884963, guid: c360a08d267d04140abf9c33b8a8ff3a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.873
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894095680436884963, guid: c360a08d267d04140abf9c33b8a8ff3a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5468203416083034116, guid: c360a08d267d04140abf9c33b8a8ff3a,
         type: 3}

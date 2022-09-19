@@ -4,37 +4,36 @@ using UnityEngine;
 
 public class PlayerView : MonoBehaviour
 {
-    public Element currentElement;
-    [SerializeField] GameObject[] playerModel;
-    MeshRenderer[] mr;
-    private void Start()
-    {       
-        for (int i = 0; i < playerModel.Length; i++)
-        {
-            mr[i] = playerModel[i].GetComponent<MeshRenderer>(); 
-        }
-    }
-    public void ChangeElement(Element element)
+    public enum PlayerElement
     {
-        currentElement = element;
+        Fire,
+        Water,
+        Ice
+    }
+    public PlayerElement currentElement;
+    [SerializeField] MeshRenderer[] playerMr;
+
+    public void ChangeElement(EnumElement element)
+    {
+        currentElement = element.PlayerElement;
         switch (currentElement)
         {
-            case Element.Fire:
-                foreach (var player in mr)
+            case PlayerElement.Fire:
+                foreach (var player in playerMr)
                 {
                     player.material.color = Color.red;
                     player.material.SetColor("_EmissionColor", Color.red);
-                }                
+                }
                 break;
-            case Element.Water:
-                foreach (var player in mr)
+            case PlayerElement.Water:
+                foreach (var player in playerMr)
                 {
                     player.material.color = Color.blue;
                     player.material.SetColor("_EmissionColor", Color.blue);
                 }
                 break;
-            case Element.Ice:
-                foreach (var player in mr)
+            case PlayerElement.Ice:
+                foreach (var player in playerMr)
                 {
                     player.material.color = Color.cyan;
                     player.material.SetColor("_EmissionColor", Color.cyan);
