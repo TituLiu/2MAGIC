@@ -96,6 +96,9 @@ MonoBehaviour:
   dead: 1
   revive: 0
   offset: 1
+  arriveRadius: 3
+  maxForce: 5
+  _velocity: {x: 0, y: 0, z: 0}
   targetDir: {x: 0, y: 0, z: 0}
   shootDir: 25
 --- !u!54 &1210747795905466751

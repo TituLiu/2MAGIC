@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbsorverBulletSpawner : MonoBehaviour
+public class IceBulletSpawner : MonoBehaviour
 {
     AbsorverBulletFactory _bulletFactory = new AbsorverBulletFactory();
     public GameObject absorverBullet;
 
-    public AbsorverBullet TurnOnObject(AbsorverBullet b)
+    public IceBullet TurnOnObject(IceBullet b)
     {
         b.gameObject.SetActive(true);
         return b;
     }
-    public AbsorverBullet TurnOffObject(AbsorverBullet b)
+    public IceBullet TurnOffObject(IceBullet b)
     {
         b.gameObject.SetActive(false);
         return b;
     }
-    public AbsorverBullet Create()
+    public IceBullet Create()
     {
         return _bulletFactory.Create(absorverBullet);
     }

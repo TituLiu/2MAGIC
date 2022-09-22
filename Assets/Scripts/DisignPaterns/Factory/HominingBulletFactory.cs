@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HominingBulletFactory : IFactory<HomingBullet, GameObject>
+public class HominingBulletFactory : IFactory<WaterBullet, GameObject>
 {
-    public HomingBullet Create(GameObject prefab)
+    public WaterBullet Create(GameObject prefab)
     {
-        var obj = Object.Instantiate(prefab).GetComponent<HomingBullet>();
+        var obj = Object.Instantiate(prefab).GetComponent<WaterBullet>();
         return obj;
     }
 }

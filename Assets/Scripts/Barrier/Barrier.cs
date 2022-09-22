@@ -26,20 +26,20 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
     public GameObject[] bullets;
     public Vector3 reflect;
 
-    public Pool<HomingBullet> waterBulletPool;
-    public HominingBulletSpawner waterSpawner;
+    public Pool<WaterBullet> waterBulletPool;
+    public WaterBulletSpawner waterSpawner;
 
-    public Pool<ExplosiveBullet> fireBulletPool;
-    public ExplosiveBulletSpawner fireBulletSpawner;
+    public Pool<FireBullet> fireBulletPool;
+    public FireBulletSpawner fireBulletSpawner;
 
-    public Pool<AbsorverBullet> IceBulletPool;
-    public AbsorverBulletSpawner iceBulletSpawner;
+    public Pool<IceBullet> IceBulletPool;
+    public IceBulletSpawner iceBulletSpawner;
 
     private void Start()
     {
-        waterBulletPool = new Pool<HomingBullet>(waterSpawner.Create, waterSpawner.TurnOffObject, waterSpawner.TurnOnObject, 2);
-        fireBulletPool = new Pool<ExplosiveBullet>(fireBulletSpawner.Create, fireBulletSpawner.TurnOffObject, fireBulletSpawner.TurnOnObject, 2);
-        IceBulletPool = new Pool<AbsorverBullet>(iceBulletSpawner.Create, iceBulletSpawner.TurnOffObject, iceBulletSpawner.TurnOnObject, 2);
+        waterBulletPool = new Pool<WaterBullet>(waterSpawner.Create, waterSpawner.TurnOffObject, waterSpawner.TurnOnObject, 2);
+        fireBulletPool = new Pool<FireBullet>(fireBulletSpawner.Create, fireBulletSpawner.TurnOffObject, fireBulletSpawner.TurnOnObject, 2);
+        IceBulletPool = new Pool<IceBullet>(iceBulletSpawner.Create, iceBulletSpawner.TurnOffObject, iceBulletSpawner.TurnOnObject, 2);
 
         powerUp = GameplayManager.Instance.GetComponent<IPublisher>();
         powerUp.Subscribe(this);

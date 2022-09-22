@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveBulletSpawner : MonoBehaviour
+public class FireBulletSpawner : MonoBehaviour
 {
     ExplosiveBulletFactory _bulletFactory = new ExplosiveBulletFactory();
     public GameObject explosiveBullet;
 
-    public ExplosiveBullet TurnOnObject(ExplosiveBullet b)
+    public FireBullet TurnOnObject(FireBullet b)
     {
         b.gameObject.SetActive(true);
         return b;
     }
-    public ExplosiveBullet TurnOffObject(ExplosiveBullet b)
+    public FireBullet TurnOffObject(FireBullet b)
     {
         b.gameObject.SetActive(false);
         return b;
     }
-    public ExplosiveBullet Create()
+    public FireBullet Create()
     {
         return _bulletFactory.Create(explosiveBullet);
     }

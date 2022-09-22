@@ -3,17 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomingBullet : BulletFather
+public class WaterBullet : BulletFather
 {
     GameObject target;
     bool targetAquired = false;
-    private void Start()
-    {
-        EventManager.Instance.Subscribe("OnRevive", Reset);
-        bulletIntensity = 1;
-        _MyDelegate = Movement;
-        StartCoroutine(Die());
-    }
+
     void Update()
     {
         _MyDelegate();

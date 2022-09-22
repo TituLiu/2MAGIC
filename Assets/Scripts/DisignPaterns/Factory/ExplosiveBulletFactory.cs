@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveBulletFactory : IFactory<ExplosiveBullet, GameObject>
+public class ExplosiveBulletFactory : IFactory<FireBullet, GameObject>
 {
-    public ExplosiveBullet Create(GameObject prefab)
+    public FireBullet Create(GameObject prefab)
     {
-        var obj = Object.Instantiate(prefab).GetComponent<ExplosiveBullet>();
+        var obj = Object.Instantiate(prefab).GetComponent<FireBullet>();
         return obj;
     }
 }

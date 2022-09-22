@@ -5,72 +5,76 @@ using UnityEngine;
 public enum Element {Fire, Water, Ice};
 public class BulletFather : MonoBehaviour, IPublisher
 {
-    public Element bulletElement;
-    private List<ISubscriber> _subscribers = new List<ISubscriber>();
-    public int bulletIntensity, intensity, randomNumber;
-    public float speedBullet = 2;
-    public int timer = 10;
-    public float counter = 10;
-    public bool particlesOn = false;
-    [SerializeField] protected LayerMask _bounceMask;
     public MeshRenderer mr;
     public Rigidbody rb;
+    public GameObject meshObject;
     public delegate void ChangeTypeBullet();
     public ChangeTypeBullet _MyDelegate;
 
-    public GameObject meshObject;
+    [Header("Stats")]
+    public float speedBullet = 2;
+    public float searchTargetRadius = 2;
+    public float activateRadius = 2;
+    public int timer = 10;
+    public float counter = 10;
+    public bool particlesOn = false;
+
+    GameObject targetObj;
+    [SerializeField] protected LayerMask enemyLayerMask;
+    [SerializeField] protected LayerMask _bounceMask;
+
+    public Element bulletElement;
+    private List<ISubscriber> _subscribers = new List<ISubscriber>();
+
     private void Awake()
     {
         counter = timer;
     }
-    private void Start()
+    protected virtual void Start()
     {
         EventManager.Instance.Subscribe("OnRevive", Reset);
         rb = GetComponent<Rigidbody>();
+        _MyDelegate = SimpleMovement;
+        _MyDelegate += SearchTarget;
     }
-    public virtual void Reset(params object[] parameters)
+    protected virtual void Reset(params object[] parameters)
     {
-        _MyDelegate = Movement;
-        randomNumber = Random.Range(1, 11);
+        _MyDelegate = SimpleMovement;
+        _MyDelegate += SearchTarget;
     }
     #region Functions
-    public void Movement()
+    protected void SimpleMovement()
     {
         transform.position = new Vector3(transform.position.x, 2, transform.position.z);
         rb.velocity = transform.forward * speedBullet;
     }
+    protected void FollorTargetMovement()
+    {
+        Vector3 dir = targetObj.transform.position - transform.position;
+        dir.y = 0;
+        dir.Normalize();
+        rb.velocity = dir * speedBullet;
+    }
     #region BulletFunctions
-    public void NormalBullet()
+    protected void SearchTarget()
     {
-        mr.material.color = Color.green;
+        Collider[] searchTarget = Physics.OverlapSphere(transform.position, searchTargetRadius, enemyLayerMask);
+        if (searchTarget != null)
+        {
+            targetObj = searchTarget[0].gameObject;
+            _MyDelegate -= SearchTarget;
+            _MyDelegate += FollorTargetMovement;
+        }
     }
-    public IEnumerator TimeUntilDestroy()
+    protected void WaitForActivate()
     {
-        yield return new WaitForSeconds(1);
-        Destroy(gameObject);
+        Collider[] activate = Physics.OverlapSphere(transform.position, activateRadius, enemyLayerMask);
+        if (activate != null)
+        {
+            BulletElementalAttack();
+        }
     }
-    //private void ChangeBulletType(params object[] parameters) //Preguntar si hay una forma mejor
-    //{
-    //    float type = (int)parameters[0];
-    //    changeBullet = (TypeOfBullet)(int)type;
-    //    switch (changeBullet)
-    //    {
-    //        case TypeOfBullet.Normal:
-    //            _MyDelegate = NormalBullet;
-    //            _MyDelegate += Movement;
-    //            counter = timer;
-    //            _MyDelegate += Destroy;
-    //            break;
-    //        case TypeOfBullet.Explosive:
-    //            _MyDelegate = ExplosiveBullet;
-    //            _MyDelegate += Movement;
-    //            break;
-    //        case TypeOfBullet.Absorver:
-    //            _MyDelegate = AbsorverBullet;
-    //            _MyDelegate += Movement;
-    //            break;
-    //    }
-    //}
+    protected virtual void BulletElementalAttack(){ }
     #endregion 
 
     #endregion
@@ -83,19 +87,13 @@ public class BulletFather : MonoBehaviour, IPublisher
             gameObject.SetActive(false);
         }
         var reflectable = collision.gameObject.GetComponent<IAffect>();
-        var barrierIntensity = collision.gameObject.GetComponent<IBarrier>();
         if (reflectable != null)
         {
-            if (barrierIntensity.Intensity() >= bulletIntensity)
-            {
-                var direction = Vector3.Reflect(transform.forward, collision.GetContact(0).normal);
-                reflectable.Touch(direction, transform.position, bulletIntensity);
-                gameObject.SetActive(false);
-                Debug.Log("rebote");
-            }
-            else StartCoroutine(ColliderOff());
+            var direction = Vector3.Reflect(transform.forward, collision.GetContact(0).normal);
+            reflectable.Touch(direction, transform.position, 0);
+            gameObject.SetActive(false);
         }
-
+        else StartCoroutine(ColliderOff());
     }
     IEnumerator ColliderOff()
     {
@@ -112,5 +110,5 @@ public class BulletFather : MonoBehaviour, IPublisher
     {
         _subscribers.Remove(subscriber);
     }
-    #endregion
+    #endregion Observer
 }

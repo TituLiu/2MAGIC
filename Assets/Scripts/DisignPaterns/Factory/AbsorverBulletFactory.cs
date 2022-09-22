@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbsorverBulletFactory : IFactory<AbsorverBullet, GameObject>
+public class AbsorverBulletFactory : IFactory<IceBullet, GameObject>
 {
-    public AbsorverBullet Create(GameObject prefab)
+    public IceBullet Create(GameObject prefab)
     {
-        var obj = Object.Instantiate(prefab).GetComponent<AbsorverBullet>();
+        var obj = Object.Instantiate(prefab).GetComponent<IceBullet>();
         return obj;
     }
 }

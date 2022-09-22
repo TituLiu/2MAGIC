@@ -19,19 +19,44 @@ public class Enemy : MonoBehaviour, IDamagable
     public bool dead;
     public bool revive;
     public float offset;
+
+    [Header("Movement")]
+    [SerializeField] protected float arriveRadius;
+    [SerializeField] protected float maxForce;
+    public Vector3 _velocity;
+
     [SerializeField] protected Vector3 targetDir;
     public void Movement()
     {
-        //transform.forward = -target.transform.forward;
-        //transform.position = new Vector3(transform.position.x, offset, transform.position.z);
-        //transform.position += transform.forward * speed * Time.deltaTime;
-
-        rb.velocity = transform.forward * speed;
+        ApplyForce(Arrive());
+        rb.velocity = _velocity;
         if (Vector3.Distance(transform.position, targetDir) < dist)
         {
-            //Shoot();
             ChangeTargetDir();
         }
+    }
+    public void ApplyForce(Vector3 force)
+    {
+        _velocity += force;
+        _velocity = Vector3.ClampMagnitude(_velocity, speed);
+    }
+    public virtual Vector3 Arrive()
+    {
+        Vector3 desired = targetDir - transform.position;
+        if (desired.magnitude < arriveRadius)
+        {
+            float currSpeed = speed * (desired.magnitude / arriveRadius);
+            desired.Normalize();
+            desired *= currSpeed;
+        }
+        else
+        {
+            desired.Normalize();
+            desired *= speed;
+        }
+        Vector3 steering = desired - _velocity;
+        steering = Vector3.ClampMagnitude(steering, maxForce);
+        return steering;
     }
     public void ChangeTargetDir()
     {
@@ -63,7 +88,7 @@ public class Enemy : MonoBehaviour, IDamagable
             if (revive == false)
             {
                 EventManager.Instance.Trigger("OnEnemyKilled");
-                EventManager.Instance.Trigger("OnEnemyDeath", Random.Range(8, 11));
+                EventManager.Instance.Trigger("OnEnemyDeath", 10);
             }          
         }
     }

@@ -15,6 +15,7 @@ public class JoyStick : MonoBehaviour
 #endregion
     Vector3 _originalPosition;
     Vector3 _stickValue;
+    Vector3 _stickPos;
 
     Coroutine _CoroutineDrag;
 
@@ -35,8 +36,9 @@ public class JoyStick : MonoBehaviour
         var WaitForEndOfFrame = new WaitForEndOfFrame();
         while (true)
         {
-            _stickValue = Vector3.ClampMagnitude(Input.mousePosition - _originalPosition, radius);
-            transform.position = _stickValue + _originalPosition;
+            _stickPos = Vector3.ClampMagnitude(Input.mousePosition - _originalPosition, radius);
+            _stickValue = Vector3.ClampMagnitude(Input.mousePosition - _originalPosition, 1);
+            transform.position = _stickPos + _originalPosition;
             if (OnDragStick != null) OnDragStick(_stickValue.x, _stickValue.y);
             yield return WaitForEndOfFrame;
         }
