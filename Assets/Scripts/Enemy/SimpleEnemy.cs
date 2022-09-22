@@ -7,6 +7,7 @@ public class SimpleEnemy : Enemy
     delegate void Delegate();
     Delegate _MyDelegate;
     [SerializeField] float shootDir;
+    [SerializeField] MeshRenderer enemyMat;
     private void Awake()
     {
         target = FindObjectOfType<Castle>().gameObject;
@@ -79,5 +80,27 @@ public class SimpleEnemy : Enemy
         base.Reset();
         _MyDelegate = CheckDistance;
         dead = false;
+    }
+    protected override void OnEnable()
+    {
+        int randomElement = Random.Range(0, 3);
+        switch (randomElement)
+        {
+            case 0:
+                bulletElement = Element.Fire;
+                enemyMat.material.color = Color.red;
+                break;
+            case 1:
+                bulletElement = Element.Ice;
+                enemyMat.material.color = Color.cyan;
+                break;
+            case 2:
+                bulletElement = Element.Water;
+                enemyMat.material.color = Color.blue;
+                break;
+            default:
+                Debug.LogError("Innexistent Element");
+                break;
+        }
     }
 }

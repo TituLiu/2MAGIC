@@ -107,4 +107,23 @@ public class Enemy : MonoBehaviour, IDamagable
         revive = false;
         life = FlyWeightPointer.simpleEnemyStats.maxLife;
     }
+    protected virtual void OnEnable()
+    {
+        int randomElement = Random.Range(0, 3);
+        switch (randomElement)
+        {
+            case 0:
+                bulletElement = Element.Fire;
+                break;
+            case 1:
+                bulletElement = Element.Ice;
+                break;
+            case 2:
+                bulletElement = Element.Water;
+                break;
+            default:
+                Debug.LogError("Innexistent Element");
+                break;
+        }
+    }
 }

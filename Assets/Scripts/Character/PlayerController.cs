@@ -37,9 +37,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
         action();
     }
     void PlayerAxis()
-    {
+    {   
         float x = Input.GetAxis(model.firstPlayerHorizontalAxis);
         float z = Input.GetAxis(model.firstPlayerVerticalAxis);
+
+        Debug.Log(Input.acceleration.x);
+
         if (x != 0 || z != 0)
         {
             Movement(x, z);

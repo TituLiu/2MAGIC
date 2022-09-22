@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CanReset
   - bounce
+  - MapLimit
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Kamikaze
   - PostProccess
   - Bounce
-  - 
+  - MapLimit
   - 
   - 
   - 

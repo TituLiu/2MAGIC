@@ -101,6 +101,7 @@ MonoBehaviour:
   _velocity: {x: 0, y: 0, z: 0}
   targetDir: {x: 0, y: 0, z: 0}
   shootDir: 25
+  enemyMat: {fileID: 327270187909097427}
 --- !u!54 &1210747795905466751
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -236,6 +237,12 @@ PrefabInstance:
 --- !u!4 &3093195950695473436 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 786326360c13e834abc87299bf811e22,
+    type: 3}
+  m_PrefabInstance: {fileID: 8041046956970658310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &327270187909097427 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 786326360c13e834abc87299bf811e22,
     type: 3}
   m_PrefabInstance: {fileID: 8041046956970658310}
   m_PrefabAsset: {fileID: 0}
