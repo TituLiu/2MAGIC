@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public void Movement(float x, float z)
     {
         //transform.rotation = Quaternion.LookRotation(barrier.right);
-        Debug.Log(x);
         Vector3 movedir = new Vector3(x, 0, 0);
         Vector3 newDir = Vector3.ClampMagnitude(movedir, 1);
         transform.position += newDir * model.movementSpeed * Time.deltaTime;

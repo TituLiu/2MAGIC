@@ -5,6 +5,14 @@ using UnityEngine;
 public class FireBullet : BulletFather
 {
     [SerializeField] float explotionRadius;
+    bool particlesOn;
+    protected override void Start()
+    {
+        base.Start();
+        _MyDelegate = SimpleMovement;
+        _MyDelegate += SearchTarget;
+        _MyDelegate += WaitForActivate;
+    }
     void Update()
     {
         _MyDelegate();
@@ -16,8 +24,7 @@ public class FireBullet : BulletFather
             EventManager.Instance.Trigger("OnExplotionParticle", transform.position, 0);
             particlesOn = true;
         }
-        _MyDelegate -= SimpleMovement;
-        _MyDelegate -= WaitForActivate;
+        _MyDelegate = delegate { };
 
         Collider[] explotion = Physics.OverlapSphere(transform.position, explotionRadius, enemyLayerMask);
         if (explotion != null)
@@ -31,22 +38,14 @@ public class FireBullet : BulletFather
                 }
             }
         }
-
-        StartCoroutine(Disable());
-    }
-    IEnumerator Disable()
-    {
-        yield return new WaitForSeconds(.5f);
-        Reset();
-        gameObject.SetActive(false);
     }
     protected override void Reset(params object[] parameters)
     {
         base.Reset();
         particlesOn = false;
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        
+        Gizmos.DrawWireSphere(transform.position, searchTargetRadius);
     }
 }

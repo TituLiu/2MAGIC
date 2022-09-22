@@ -17,8 +17,7 @@ public class BulletFather : MonoBehaviour, IPublisher
     public float activateRadius = 2;
     public int timer = 10;
     public float counter = 10;
-    public bool particlesOn = false;
-
+    
     GameObject targetObj;
     [SerializeField] protected LayerMask enemyLayerMask;
     [SerializeField] protected LayerMask _bounceMask;
@@ -34,13 +33,10 @@ public class BulletFather : MonoBehaviour, IPublisher
     {
         EventManager.Instance.Subscribe("OnRevive", Reset);
         rb = GetComponent<Rigidbody>();
-        _MyDelegate = SimpleMovement;
-        _MyDelegate += SearchTarget;
     }
     protected virtual void Reset(params object[] parameters)
     {
         _MyDelegate = SimpleMovement;
-        _MyDelegate += SearchTarget;
     }
     #region Functions
     protected void SimpleMovement()
@@ -53,13 +49,14 @@ public class BulletFather : MonoBehaviour, IPublisher
         Vector3 dir = targetObj.transform.position - transform.position;
         dir.y = 0;
         dir.Normalize();
+        transform.forward = dir;
         rb.velocity = dir * speedBullet;
     }
     #region BulletFunctions
     protected void SearchTarget()
     {
         Collider[] searchTarget = Physics.OverlapSphere(transform.position, searchTargetRadius, enemyLayerMask);
-        if (searchTarget != null)
+        if (searchTarget.Length != 0)
         {
             targetObj = searchTarget[0].gameObject;
             _MyDelegate -= SearchTarget;
@@ -69,7 +66,7 @@ public class BulletFather : MonoBehaviour, IPublisher
     protected void WaitForActivate()
     {
         Collider[] activate = Physics.OverlapSphere(transform.position, activateRadius, enemyLayerMask);
-        if (activate != null)
+        if (activate.Length != 0)
         {
             BulletElementalAttack();
         }
@@ -78,8 +75,12 @@ public class BulletFather : MonoBehaviour, IPublisher
     #endregion 
 
     #endregion
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "bounce") //Cambiar esto
+        {
+            transform.forward = Vector3.Reflect(transform.forward, collision.GetContact(0).normal);
+        }
         var damageable = collision.gameObject.GetComponent<IDamagable>();
         if (damageable != null)
         {
@@ -93,7 +94,12 @@ public class BulletFather : MonoBehaviour, IPublisher
             reflectable.Touch(direction, transform.position, 0);
             gameObject.SetActive(false);
         }
-        else StartCoroutine(ColliderOff());
+        if (collision.gameObject.tag == "MapLimit")
+        {
+            gameObject.SetActive(false);
+            Reset();
+        }
+        //else StartCoroutine(ColliderOff());
     }
     IEnumerator ColliderOff()
     {
