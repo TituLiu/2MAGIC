@@ -11,6 +11,6 @@ public class CommandTakeDamage : ICommand
     }
     public void Execute()
     {
-        castleObj.GetComponent<Castle>().Damage(1);
+        castleObj.GetComponent<Castle>().Damage(1, Element.Fire);
     }
 }

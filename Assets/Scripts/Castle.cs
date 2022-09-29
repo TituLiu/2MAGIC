@@ -17,7 +17,7 @@ public class Castle : MonoBehaviour, IDamagable
         EventManager.Instance.Subscribe("OnRevive", Revive);
         life = maxLife;
     }
-    public void Damage(int damageTaken)
+    public void Damage(int damageTaken, Element elem)
     {
         life -= damageTaken;
         if (life > 0)

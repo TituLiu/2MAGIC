@@ -12,7 +12,7 @@ public class WaterAttack : MonoBehaviour
             if (enemy.Length == 0) return;
             foreach (var item in enemy)
             {
-                item.Damage(1);
+                item.Damage(1, Element.Water);
             }
         }
     }

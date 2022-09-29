@@ -7,28 +7,14 @@ public class SimpleEnemy : Enemy
     delegate void Delegate();
     Delegate _MyDelegate;
     [SerializeField] float shootDir;
-    [SerializeField] MeshRenderer enemyMat;
+    [SerializeField] MeshRenderer[] enemyMat;
     private void Awake()
     {
         target = FindObjectOfType<Castle>().gameObject;
     }
     void Start()
     {
-        int randomElement = Random.Range(0, 3);
-        switch (randomElement)
-        {
-            case 0:
-                bulletElement = Element.Fire;
-                break;
-            case 1:
-                bulletElement = Element.Water;
-                break;
-            case 2:
-                bulletElement = Element.Ice;
-                break;
-            default:
-                break;
-        }
+        ChangeElement();
         EventManager.Instance.Subscribe("OnRevive", Die);
         dead = false;
         revive = false;
@@ -40,6 +26,10 @@ public class SimpleEnemy : Enemy
         StartCoroutine(ShootCD());
         _MyDelegate = Movement;
     }
+    private void Update()
+    {
+        healthBar.transform.forward = Camera.main.transform.forward;
+    }
     private void FixedUpdate()
     {
         _MyDelegate();
@@ -48,7 +38,7 @@ public class SimpleEnemy : Enemy
     {
         transform.rotation = Quaternion.Euler(0, -180 + Random.Range(-shootDir, shootDir), 0);
         var bullet = bulletPool.Get();
-        bullet.bulletElement = bulletElement;
+        bullet.bulletElement = myElement;
         bullet.transform.rotation = transform.rotation;
         bullet.transform.position = transform.position;
         rb.velocity = Vector3.zero;
@@ -81,26 +71,48 @@ public class SimpleEnemy : Enemy
         _MyDelegate = CheckDistance;
         dead = false;
     }
-    protected override void OnEnable()
+    private void ChangeElement()
     {
         int randomElement = Random.Range(0, 3);
         switch (randomElement)
         {
             case 0:
-                bulletElement = Element.Fire;
-                enemyMat.material.color = Color.red;
+                myElement = Element.Fire;
+                foreach (var mat in enemyMat)
+                {
+                    Color color = mat.material.color;
+                    color = Color.red;
+                    color.a = 0.5f;
+                    mat.material.color = color;
+                }
                 break;
             case 1:
-                bulletElement = Element.Ice;
-                enemyMat.material.color = Color.cyan;
+                myElement = Element.Ice;
+                foreach (var mat in enemyMat)
+                {
+                    Color color = mat.material.color;
+                    color = Color.cyan;
+                    color.a = 0.5f;
+                    mat.material.color = color;
+                }
                 break;
             case 2:
-                bulletElement = Element.Water;
-                enemyMat.material.color = Color.blue;
+                myElement = Element.Water;
+                foreach (var mat in enemyMat)
+                {
+                    Color color = mat.material.color;
+                    color = Color.blue;
+                    color.a = 0.5f;
+                    mat.material.color = color;
+                }
                 break;
             default:
                 Debug.LogError("Innexistent Element");
                 break;
         }
+    }
+    protected override void OnEnable()
+    {
+        ChangeElement();
     }
 }

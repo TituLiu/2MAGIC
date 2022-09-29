@@ -9,7 +9,7 @@ public class ExplotionArea : MonoBehaviour
         var damageable = other.gameObject.GetComponent<IDamagable>();
         if (damageable != null)
         {
-            damageable.Damage(10);
+            damageable.Damage(10, Element.Fire);
             //gameObject.SetActive(false);
         }
     }

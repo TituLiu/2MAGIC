@@ -12,7 +12,14 @@ public class PlayerView : MonoBehaviour
     }
     public PlayerElement currentElement;
     [SerializeField] MeshRenderer[] playerMr;
-
+    private void Start()
+    {
+        foreach (var player in playerMr)
+        {
+            player.material.color = Color.red;
+            player.material.SetColor("_EmissionColor", Color.red);
+        }
+    }
     public void ChangeElement(EnumElement element)
     {
         currentElement = element.PlayerElement;

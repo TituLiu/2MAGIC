@@ -15,10 +15,10 @@ public class IceAttack : MonoBehaviour
     {
         _rb.velocity = transform.forward * _speed;
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        var damageable = collision.gameObject.GetComponent<IDamagable>();
-        if (damageable != null) damageable.Damage(1);
-        if(collision.gameObject.layer != 11) Destroy(gameObject);
+        var damageable = other.gameObject.GetComponent<IDamagable>();
+        if (damageable != null) damageable.Damage(1, Element.Ice);
+        Destroy(gameObject);
     }
 }

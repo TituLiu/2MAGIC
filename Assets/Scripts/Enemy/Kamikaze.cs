@@ -52,14 +52,14 @@ public class Kamikaze : Enemy
     {
         if (collision.gameObject.layer == 9)
         {
-            Damage(1);
+            Damage(1, Element.Fire);
         }
         var damageable = collision.gameObject.GetComponent<IDamagable>();
         if (damageable != null)
         {
             _MyDelegate = Stay;
             Explote();
-            damageable.Damage(1);
+            damageable.Damage(1, Element.Fire);
             EventManager.Instance.Trigger("OnExplotionParticle", transform.position, 0);
         }
     }   

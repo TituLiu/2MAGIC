@@ -37,6 +37,7 @@ public class BulletFather : MonoBehaviour, IPublisher
     protected virtual void Reset(params object[] parameters)
     {
         _MyDelegate = SimpleMovement;
+        gameObject.SetActive(false);
     }
     #region Functions
     protected void SimpleMovement()
@@ -84,7 +85,7 @@ public class BulletFather : MonoBehaviour, IPublisher
         var damageable = collision.gameObject.GetComponent<IDamagable>();
         if (damageable != null)
         {
-            damageable.Damage(1);
+            //damageable.Damage(1, Element.Fire);
             gameObject.SetActive(false);
         }
         var reflectable = collision.gameObject.GetComponent<IAffect>();

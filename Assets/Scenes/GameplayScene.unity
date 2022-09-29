@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 145978128}
   m_Layer: 15
   m_Name: PlayerLife
-  m_TagString: Untagged
+  m_TagString: MapLimit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7216,7 +7216,7 @@ GameObject:
   - component: {fileID: 1970654979}
   - component: {fileID: 1970654978}
   - component: {fileID: 1970654977}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7960,7 +7960,7 @@ PrefabInstance:
     - target: {fileID: 7458883649914031218, guid: 65a33aa0f72baa7489ad04bd05462ff7,
         type: 3}
       propertyPath: movementSpeed
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7458883649914031218, guid: 65a33aa0f72baa7489ad04bd05462ff7,
         type: 3}

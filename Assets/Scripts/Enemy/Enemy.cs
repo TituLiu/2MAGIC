@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    [SerializeField] protected Slider healthBar;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Transform pos1, pos2;
+    [SerializeField] protected ParticleSystem fireDeathParticle;
+    [SerializeField] protected ParticleSystem iceDeathParticle;
+    [SerializeField] protected ParticleSystem waterDeathParticle;
     [SerializeField] protected float dist;
-    public Element bulletElement;
+    public Element myElement;
     public GameObject target;
     public GameObject bulletPrefab;
 
@@ -82,19 +87,85 @@ public class Enemy : MonoBehaviour, IDamagable
         dead = param;
         if (dead)
         {
-            Debug.Log("Revivi");
+            if (myElement == Element.Fire)
+            {
+                var particle = Instantiate(fireDeathParticle);
+                particle.transform.position = transform.position;
+            }
+            else if (myElement == Element.Ice)
+            {
+                var particle = Instantiate(iceDeathParticle); 
+                particle.transform.position = transform.position;
+            }
+            else
+            {
+                var particle = Instantiate(waterDeathParticle);
+                particle.transform.position = transform.position;
+            }
             Reset();
-            gameObject.SetActive(false);
             if (revive == false)
             {
                 EventManager.Instance.Trigger("OnEnemyKilled");
                 EventManager.Instance.Trigger("OnEnemyDeath", 10);
-            }          
+            }
         }
     }
-    public void Damage(int damageTaken)
+    IEnumerator WaitForDeath()
     {
-        life -= damageTaken;
+        yield return new WaitForSeconds(2);
+       
+    }
+    public void Damage(int damageTaken, Element elem)
+    {
+        healthBar.gameObject.SetActive(true);
+        switch (myElement)
+        {
+            case Element.Fire:
+                if (elem == Element.Water)
+                {
+                    life -= damageTaken * 3;
+                }
+                else if (elem == Element.Ice)
+                {
+                    life -= damageTaken * 2;
+                }
+                else
+                {
+                    life -= damageTaken;
+                }
+                break;
+            case Element.Water:
+                if (elem == Element.Ice)
+                {
+                    life -= damageTaken * 3;
+                }
+                else if (elem == Element.Fire)
+                {
+                    life -= damageTaken * 2;
+                }
+                else
+                {
+                    life -= damageTaken;
+                }
+                break;
+            case Element.Ice:
+                if (elem == Element.Fire)
+                {
+                    life -= damageTaken * 3;
+                }
+                else if (elem == Element.Water)
+                {
+                    life -= damageTaken * 2;
+                }
+                else
+                {
+                    life -= damageTaken;
+                }
+                break;
+            default:
+                break;
+        }
+        healthBar.value = life;
         if (life <= 0)
         {
             dead = true;
@@ -106,6 +177,7 @@ public class Enemy : MonoBehaviour, IDamagable
         dead = false;       
         revive = false;
         life = FlyWeightPointer.simpleEnemyStats.maxLife;
+        gameObject.SetActive(false);
     }
     protected virtual void OnEnable()
     {
@@ -113,13 +185,13 @@ public class Enemy : MonoBehaviour, IDamagable
         switch (randomElement)
         {
             case 0:
-                bulletElement = Element.Fire;
+                myElement = Element.Fire;
                 break;
             case 1:
-                bulletElement = Element.Ice;
+                myElement = Element.Ice;
                 break;
             case 2:
-                bulletElement = Element.Water;
+                myElement = Element.Water;
                 break;
             default:
                 Debug.LogError("Innexistent Element");

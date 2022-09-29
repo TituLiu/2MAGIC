@@ -34,7 +34,7 @@ public class FireBullet : BulletFather
                 var enemyLife = enemy.GetComponent<IDamagable>();
                 if (enemyLife != null)
                 {
-                    enemyLife.Damage(1);
+                    enemyLife.Damage(1, Element.Fire);
                 }
             }
         }
