@@ -10,7 +10,7 @@ public class SimpleEnemy : Enemy
     [SerializeField] MeshRenderer[] enemyMat;
     private void Awake()
     {
-        target = FindObjectOfType<Castle>().gameObject;
+        target = FindObjectOfType<Life>().gameObject;
     }
     void Start()
     {

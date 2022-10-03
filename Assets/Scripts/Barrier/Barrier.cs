@@ -104,18 +104,6 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
         //    barrierIntensity = 1;
         //}
     }
-    private void PowerUp()
-    {
-        //_myDelegate -= ChangeColor;
-        mr.material.color = Color.red;
-        barrierIntensity = 3;
-        StartCoroutine(PowerUpTime());
-    }
-    IEnumerator PowerUpTime()
-    {
-        yield return new WaitForSeconds(5);
-        //_myDelegate += ChangeColor;
-    }
     public void Touch(Vector3 dirBarrier, Vector3 bulletPos, int intensity)
     {
         switch (currentElement)
@@ -166,10 +154,7 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
     #region Observer
     public void OnNotify(string eventId)
     {
-        if (eventId == "OnKillStreak5")
-        {
-            PowerUp();
-        }
+
     }
     #endregion
 }

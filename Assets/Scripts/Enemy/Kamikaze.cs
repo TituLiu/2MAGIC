@@ -12,7 +12,7 @@ public class Kamikaze : Enemy
         EventManager.Instance.Subscribe("OnRevive", Die);
         revive = false;
         dead = false;
-        target = FindObjectOfType<Castle>().gameObject;
+        target = FindObjectOfType<Life>().gameObject;
         life = FlyWeightPointer.simpleEnemyStats.maxLife;
         speed = FlyWeightPointer.simpleEnemyStats.maxSpeed; //sacar
         _MyDelegate = Movement;

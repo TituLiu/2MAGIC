@@ -11,14 +11,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public JoyStick myStick;
     public Transform barrier;
     private event Action action;
-    [SerializeField]
-    private int playerNumber;
-    private void Awake()
-    {
-        //model.slowTimePower = new CommandTakeDamage();
-    }
+    private float powerUpTime;
+    private float powerUpDuration;
+
     void Start()
     {
+        model.movementSpeed = model.baseMovementSpeed;
         myStick.OnDragStick += Movement;
         myStick.OnEndDragStick += Movement;
         action = PlayerAxis;
@@ -41,6 +39,24 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {
         Vector3 movedir = new Vector3(x * model.movementSpeed, 0, 0);
         transform.position += movedir * model.movementSpeed * Time.deltaTime;
+    }
+    public void SpeedPowerUp(float speed, float duration)
+    {
+        model.movementSpeed *= speed;
+        powerUpTime = duration;
+        if (powerUpTime == powerUpDuration)
+        {
+            action += SpeedDesaleration;
+        }       
+    }
+    public void SpeedDesaleration()
+    {
+        powerUpDuration -= Time.deltaTime * 1;
+        if (powerUpTime <= powerUpDuration)
+        {
+            model.movementSpeed = model.baseMovementSpeed;
+            action -= SpeedDesaleration;
+        }
     }
     public void OnNotify(string eventId)
     {

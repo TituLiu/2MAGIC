@@ -107,6 +107,7 @@ public class Enemy : MonoBehaviour, IDamagable
             {
                 EventManager.Instance.Trigger("OnEnemyKilled");
                 EventManager.Instance.Trigger("OnEnemyDeath", 10);
+
             }
         }
     }
