@@ -1195,7 +1195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &179469000
 Transform:
   m_ObjectHideFlags: 0
@@ -1630,6 +1630,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickUpSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938156235292901875, guid: 99b440e1cd659984e9855c1589f44213,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99b440e1cd659984e9855c1589f44213, type: 3}
@@ -2801,6 +2806,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickUpShield
       objectReference: {fileID: 0}
+    - target: {fileID: 6922042655532115143, guid: 995a5418dd182cc4a8a3e7b4fed5d728,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 995a5418dd182cc4a8a3e7b4fed5d728, type: 3}
 --- !u!1001 &556790868
@@ -2953,6 +2963,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickUpHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 894539264095129773, guid: 5c59acf124de02c4faa7fc6581ca98a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c59acf124de02c4faa7fc6581ca98a3, type: 3}
@@ -3672,6 +3687,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickUpBlacHole
+      objectReference: {fileID: 0}
+    - target: {fileID: 26068004427203610, guid: 7bc645a9815a9794fbbbc7b5747639f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 182347283538698102, guid: 7bc645a9815a9794fbbbc7b5747639f5,
         type: 3}
@@ -8615,6 +8635,11 @@ PrefabInstance:
       propertyPath: playerModel.Array.data[1]
       value: 
       objectReference: {fileID: 1197826673}
+    - target: {fileID: 7458883649914031218, guid: 65a33aa0f72baa7489ad04bd05462ff7,
+        type: 3}
+      propertyPath: baseMovementSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7458883649914031219, guid: 65a33aa0f72baa7489ad04bd05462ff7,
         type: 3}
       propertyPath: playerModel.Array.size
