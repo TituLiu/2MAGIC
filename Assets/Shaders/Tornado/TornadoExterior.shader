@@ -16,7 +16,7 @@ Shader "TornadoExterior"
 	SubShader
 	{
 		Tags{ "RenderType" = "Transparent"  "Queue" = "Transparent+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
-		Cull Back
+		Cull Off
 		CGINCLUDE
 		#include "UnityShaderVariables.cginc"
 		#include "UnityPBSLighting.cginc"
@@ -157,7 +157,7 @@ Shader "TornadoExterior"
 }
 /*ASEBEGIN
 Version=18900
-940;73;515;632;1065.444;135.7754;1;True;False
+97;51;595;543;1856.986;288.6274;2.764952;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;1;-2480.966,548.606;Inherit;False;Property;_Float6;Float 6;3;0;Create;True;0;0;0;False;0;False;15.01;3;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleTimeNode;2;-2318.966,554.606;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.Vector2Node;3;-2384.55,380.769;Inherit;False;Property;_Spped;Spped;2;0;Create;True;0;0;0;False;0;False;-0.3,-0.3;0.5,-0.2;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
@@ -171,7 +171,7 @@ Node;AmplifyShaderEditor.ColorNode;12;-1041.705,260.6621;Inherit;False;Property;
 Node;AmplifyShaderEditor.StepOpNode;11;-1103.657,83.677;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0.73;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;14;-741.3251,47.46832;Inherit;True;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;17;-496.639,52.88787;Inherit;True;myVarName;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;26.3383,-102.3907;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;TornadoExterior;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Transparent;0.5;True;True;0;False;Transparent;;Transparent;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;2;5;False;-1;10;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;False;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;26.3383,-102.3907;Float;False;True;-1;2;ASEMaterialInspector;0;0;Standard;TornadoExterior;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;False;False;Off;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Transparent;0.5;True;True;0;False;Transparent;;Transparent;All;14;all;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;2;5;False;-1;10;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;False;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;2;0;1;0
 WireConnection;6;0;4;0
 WireConnection;6;2;3;0
@@ -187,4 +187,4 @@ WireConnection;17;0;14;0
 WireConnection;0;2;17;0
 WireConnection;0;9;17;0
 ASEEND*/
-//CHKSM=C039FC242E47223850E64F47907D92E7863B23BA
+//CHKSM=1452AA742E31F9DF1F5CD8E657A50EED235B5268
