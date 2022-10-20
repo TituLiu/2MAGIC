@@ -4,8 +4,9 @@ public class PlayerModel : MonoBehaviour
 {
     public bool slowTime = false;
     public int playerNumber;
-    public float movementSpeed = 15;
-    public float baseMovementSpeed = 15;
+    public float movementSpeed = 0;
+    public float baseMovementSpeed = 0;
+    public float maxMovementSpeed = 0;
     public float distance;
     public float distanceLimit = 10;
     public string firstPlayerHorizontalAxis = "1PHorizontal";

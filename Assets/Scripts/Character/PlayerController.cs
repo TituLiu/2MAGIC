@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, ISubscriber
 {
+    [SerializeField] int mapLimitMask;
+    [SerializeField] int[] mapLimit;
     Rigidbody rb;
     public Transform player;
     public PlayerModel model;
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         model.movementSpeed = model.baseMovementSpeed;
         myStick.OnDragStick += Movement;
         myStick.OnEndDragStick += Movement;
@@ -34,11 +37,18 @@ public class PlayerController : MonoBehaviour, ISubscriber
         {
             Movement(x, z);
         }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
     }
     public void Movement(float x, float z)
     {
-        Vector3 movedir = new Vector3(x * model.movementSpeed, 0, 0);
-        transform.position += movedir * model.movementSpeed * Time.deltaTime;
+        //Vector3 movedir = new Vector3(x * model.movementSpeed, 0, 0);
+        float movedir = x * model.movementSpeed;
+        float newMovedir = Mathf.Clamp(movedir, -model.maxMovementSpeed, model.maxMovementSpeed);
+        //transform.position += movedir * model.movementSpeed * Time.deltaTime;
+        rb.velocity = new Vector3(newMovedir, 0 ,0);
     }
     public void SpeedPowerUp(float speed, float duration)
     {
@@ -56,6 +66,14 @@ public class PlayerController : MonoBehaviour, ISubscriber
         {
             model.movementSpeed = model.baseMovementSpeed;
             action -= SpeedDesaleration;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == mapLimitMask)
+        {
+            //model.movementSpeed = 0;
+
         }
     }
     public void OnNotify(string eventId)

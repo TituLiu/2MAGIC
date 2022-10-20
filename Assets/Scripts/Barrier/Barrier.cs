@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
+public class Barrier : MonoBehaviour, ISubscriber, IAffect
 {
     public enum BarrierElement
     {
@@ -15,8 +15,7 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
     MeshRenderer mr;
     [SerializeField]
     int distanceLimit;
-    [SerializeField]
-    List<Transform> playerPos = new List<Transform>();
+    [SerializeField] Transform barrierPos;
     private List<ISubscriber> _subscribers = new List<ISubscriber>();
     public IPublisher powerUp;
     private delegate void Delegate();
@@ -43,31 +42,12 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
 
         powerUp = GameplayManager.Instance.GetComponent<IPublisher>();
         powerUp.Subscribe(this);
-        //_myDelegate += CheckDistance; 
-        //_myDelegate += Movement;
-        //_myDelegate += Resize; 
-        //_myDelegate += ChangeColor; 
         mr = GetComponent<MeshRenderer>();
     }
-    void Update()
+    private void Update()
     {
-        //_myDelegate();
+        transform.position = barrierPos.position;
     }
-    //private void CheckDistance()
-    //{
-    //    distance = Vector3.Distance(playerPos[0].position, playerPos[1].position);
-    //}
-    //private void Resize()
-    //{
-    //    transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, distance);
-    //    if (distance > distanceLimit*3) foreach (var subscriber in _subscribers) subscriber.OnNotify("OnLimitDistance");
-    //}
-    //private void Movement()
-    //{
-    //    transform.position = (playerPos[0].position + playerPos[1].position) / 2;
-    //    var dir = playerPos[0].position - playerPos[1].position;
-    //    transform.forward = dir;
-    //}
     public void ChangeElement(EnumElement element)
     {
         currentElement = element.BarrierElement;
@@ -88,21 +68,6 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
             default:
                 break;
         }
-        //if (distance > 1 && distance <= distanceLimit)
-        //{
-        //    mr.material.color = Color.red;
-        //    barrierIntensity = 3;
-        //}
-        //else if (distance > distanceLimit && distance <= distanceLimit * 2)
-        //{
-        //    mr.material.color = Color.yellow;
-        //    barrierIntensity = 2;
-        //}
-        //else if (distance > distanceLimit * 2)
-        //{
-        //    mr.material.color = Color.green;
-        //    barrierIntensity = 1;
-        //}
     }
     public void Touch(Vector3 dirBarrier, Vector3 bulletPos, int intensity)
     {
@@ -126,30 +91,6 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect, IBarrier
             default:
                 break;
         }
-        //switch (barrierIntensity)
-        //{
-        //    case 1:
-        //        var homingBullet = hommingBulletPool.Get();
-        //        homingBullet.transform.position = bulletPos;
-        //        homingBullet.transform.forward = dirBarrier;
-        //        break;
-        //    case 2:
-        //        var explosiveBullet = explosiveBulletPool.Get();
-        //        explosiveBullet.transform.position = bulletPos;
-        //        explosiveBullet.transform.forward = dirBarrier;
-        //        break;
-        //    case 3:
-        //        var absorverBullet = absorverBulletPool.Get();
-        //        absorverBullet.transform.position = bulletPos;
-        //        absorverBullet.transform.forward = dirBarrier;
-        //        break;
-        //}
-    }
-    public int Intensity()
-    {
-        int intensity;
-        intensity = barrierIntensity;
-        return intensity;
     }
     #region Observer
     public void OnNotify(string eventId)

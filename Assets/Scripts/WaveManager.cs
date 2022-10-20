@@ -22,7 +22,7 @@ public class WaveManager : MonoBehaviour
     private void Awake()
     {
         spawnPointList.Add(spawnPoint);
-        for (int i = 0; i < spawnPointsNum; i++)
+        for (int i = 0; i < spawnPointsNum - 1; i++)
         {
             var currentPos = spawnPointList[i];
             var obj = Instantiate(spawnPoint, transform);
