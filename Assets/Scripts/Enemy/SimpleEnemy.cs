@@ -16,6 +16,7 @@ public class SimpleEnemy : Enemy
     {
         ChangeElement();
         EventManager.Instance.Subscribe("OnRevive", Die);
+        EventManager.Instance.Subscribe("OnBlackHole", BlackHoleAbsorved);
         dead = false;
         revive = false;
         bulletPool = new Pool<BulletFather>(bulletSpawner.Create, bulletSpawner.TurnOffObject, bulletSpawner.TurnOnObject, 2);
@@ -110,6 +111,10 @@ public class SimpleEnemy : Enemy
                 Debug.LogError("Innexistent Element");
                 break;
         }
+    }
+    protected override void BlackHoleAbsorved(params object[] parameters)
+    {
+        _MyDelegate = delegate { };
     }
     protected override void OnEnable()
     {

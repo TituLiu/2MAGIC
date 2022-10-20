@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3072522432578994336}
   - component: {fileID: 3072522432578994339}
   - component: {fileID: 3072522432578994338}
-  - component: {fileID: 3072522432578994337}
   m_Layer: 0
   m_Name: Distortion
   m_TagString: Untagged
@@ -79,20 +78,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &3072522432578994337
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3072522432578994343}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &3072522433394931708
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,10 +87,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3072522433394931704}
+  - component: {fileID: 4577492568736848866}
   - component: {fileID: 3072522433394931711}
   - component: {fileID: 3072522433394931710}
   - component: {fileID: 3072522433394931709}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: BlackHole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +114,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4577492568736848866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072522433394931708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c3cfd6a95d7644d9243269c8a18494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 70
+  enemiesMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  aborveForceToCenter: 20
+  aborveForceToRight: 25
 --- !u!33 &3072522433394931711
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -182,7 +186,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072522433394931708}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

@@ -111,10 +111,10 @@ public class Enemy : MonoBehaviour, IDamagable
             }
         }
     }
+    protected virtual void BlackHoleAbsorved(params object[] parameters) { }
     IEnumerator WaitForDeath()
     {
-        yield return new WaitForSeconds(2);
-       
+        yield return new WaitForSeconds(2);      
     }
     public void Damage(int damageTaken, Element elem)
     {
