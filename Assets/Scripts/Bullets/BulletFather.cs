@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Element {Fire, Water, Ice};
+public enum Element {Fire, Water, Ice, BlackHole};
 public class BulletFather : MonoBehaviour, IPublisher
 {
     public MeshRenderer mr;
@@ -34,7 +34,7 @@ public class BulletFather : MonoBehaviour, IPublisher
         EventManager.Instance.Subscribe("OnRevive", Reset);
         rb = GetComponent<Rigidbody>();
     }
-    protected virtual void Reset(params object[] parameters)
+    public virtual void Reset(params object[] parameters)
     {
         _MyDelegate = SimpleMovement;
         gameObject.SetActive(false);
@@ -85,7 +85,6 @@ public class BulletFather : MonoBehaviour, IPublisher
         var damageable = collision.gameObject.GetComponent<IDamagable>();
         if (damageable != null)
         {
-            //damageable.Damage(1, Element.Fire);
             gameObject.SetActive(false);
         }
         var reflectable = collision.gameObject.GetComponent<IAffect>();
@@ -101,6 +100,10 @@ public class BulletFather : MonoBehaviour, IPublisher
             Reset();
         }
         //else StartCoroutine(ColliderOff());
+    }
+    protected void BlackHoleAbsorved(params object[] parameters)
+    {
+        _MyDelegate = delegate { };
     }
     IEnumerator ColliderOff()
     {

@@ -8,11 +8,14 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect
     {
         Fire,
         Water,
-        Ice
+        Ice,
+        BlackHole
     }
     public BarrierElement currentElement;
-
+    public BarrierElement previousElement;
+    EnumElement enumElement;
     MeshRenderer mr;
+    [SerializeField] PlayerView playerView;
     [SerializeField]
     int distanceLimit;
     [SerializeField] Transform barrierPos;
@@ -22,7 +25,7 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect
     Delegate _myDelegate;
     public int barrierIntensity;
     private float distance;
-    public GameObject[] bullets;
+    public GameObject blackHoleBullet;
     public Vector3 reflect;
 
     public Pool<WaterBullet> waterBulletPool;
@@ -43,6 +46,7 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect
         powerUp = GameplayManager.Instance.GetComponent<IPublisher>();
         powerUp.Subscribe(this);
         mr = GetComponent<MeshRenderer>();
+        enumElement = GetComponent<EnumElement>();
     }
     private void Update()
     {
@@ -50,6 +54,8 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect
     }
     public void ChangeElement(EnumElement element)
     {
+        //previousElement = currentElement;
+        //enumElement.BarrierElement = previousElement;
         currentElement = element.BarrierElement;
         switch (currentElement)
         {
@@ -64,6 +70,10 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect
             case BarrierElement.Ice:
                 mr.material.color = Color.cyan;
                 mr.material.SetColor("_EmissionColor", Color.cyan);
+                break;
+            case BarrierElement.BlackHole:
+                mr.material.color = Color.black;
+                mr.material.SetColor("_EmissionColor", Color.black);
                 break;
             default:
                 break;
@@ -87,6 +97,12 @@ public class Barrier : MonoBehaviour, ISubscriber, IAffect
                 var iceBullet = IceBulletPool.Get();
                 iceBullet.transform.position = bulletPos;
                 iceBullet.transform.forward = dirBarrier;
+                break;
+            case BarrierElement.BlackHole:
+                var blackHole = Instantiate(blackHoleBullet);
+                blackHole.transform.position = new Vector3(transform.position.x, 4, transform.position.z);
+                ChangeElement(enumElement);
+                playerView.ChangeElement(enumElement);
                 break;
             default:
                 break;

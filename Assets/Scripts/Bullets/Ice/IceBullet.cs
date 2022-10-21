@@ -27,7 +27,7 @@ public class IceBullet : BulletFather
         }
         Reset();
     }
-    protected override void Reset(params object[] parameters)
+    public override void Reset(params object[] parameters)
     {
         base.Reset();
         rb.constraints = RigidbodyConstraints.None;

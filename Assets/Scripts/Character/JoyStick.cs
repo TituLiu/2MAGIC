@@ -7,14 +7,14 @@ public class JoyStick : MonoBehaviour
     public float radius;
 
 #region EVENTS
-    public delegate void DragStick(float x, float z);
+    public delegate void DragStick(float x);
     public event DragStick OnDragStick;
 
-    public delegate void EndStick(float x, float z);
+    public delegate void EndStick(float x);
     public event EndStick OnEndDragStick;
 #endregion
     Vector3 _originalPosition;
-    Vector3 _stickValue;
+    [SerializeField] Vector3 _stickValue;
     Vector3 _stickPos;
 
     Coroutine _CoroutineDrag;
@@ -37,9 +37,10 @@ public class JoyStick : MonoBehaviour
         while (true)
         {
             _stickPos = Vector3.ClampMagnitude(Input.mousePosition - _originalPosition, radius);
-            _stickValue = Vector3.ClampMagnitude(Input.mousePosition - _originalPosition, 1);
-            transform.position = _stickPos + _originalPosition;
-            if (OnDragStick != null) OnDragStick(_stickValue.x, _stickValue.y);
+            _stickValue = Vector3.ClampMagnitude(Input.mousePosition - _originalPosition, radius);
+            _stickPos.y = 0;
+            transform.position = _stickPos + _originalPosition;           
+            if (OnDragStick != null) OnDragStick(_stickValue.x);
             yield return WaitForEndOfFrame;
         }
     }
@@ -55,7 +56,7 @@ public class JoyStick : MonoBehaviour
         transform.position = _originalPosition;
         _stickValue = Vector3.zero;
 
-        if (OnEndDragStick != null) OnEndDragStick(_stickValue.x, _stickValue.y);
+        if (OnEndDragStick != null) OnEndDragStick(_stickValue.x);
     }
 }
 

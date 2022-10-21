@@ -11,7 +11,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private List<GameObject> spawnPointList;
     public int enemyCounter;
     public float spawnRate, spawnRateIncrease;
-    public bool alreadySpawn = false;
+    bool alreadySpawn = false;
+    bool canSpawn = true;
 
     public Pool<SimpleEnemy> enemyPool;
     public Pool<Kamikaze> enemyKamikazePool;
@@ -36,33 +37,33 @@ public class WaveManager : MonoBehaviour
         enemyPool = new Pool<SimpleEnemy>(enemySpawner.Create, enemySpawner.TurnOffObject, enemySpawner.TurnOnObject, 8);
         enemyKamikazePool = new Pool<Kamikaze>(enemyKamikazeSpawner.Create, enemyKamikazeSpawner.TurnOffObject, enemyKamikazeSpawner.TurnOnObject, 4);
         EventManager.Instance.Subscribe("OnEnemyKilled", EnemyKilled);
+        EventManager.Instance.Subscribe("OnStopWaveSpawner", StopSpawn);
         SpawnEnemy();
     }
     public void SpawnEnemy()
     {
-        if (enemyCounter < 8 && !alreadySpawn)
+        if (enemyCounter < 8 && !alreadySpawn && canSpawn)
         {
             if (Random.Range(1,11) <= simpleEnemyChanse)
             {
                 var enemy = enemyPool.Get();
                 enemy.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].transform.position;
                 enemyCounter++;
-                StartCoroutine(WaveSpawner());
             }
             else
             {
                 var enemy = enemyKamikazePool.Get();
                 enemy.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].transform.position;
                 enemyCounter++;
-                StartCoroutine(WaveSpawner());
             }
         }
+        StartCoroutine(WaveSpawner());
     }
     IEnumerator WaveSpawner()
     {
         alreadySpawn = true;
         yield return new WaitForSeconds(spawnRate);
-        if (spawnRate > 3)
+        if (spawnRate > 3 && canSpawn)
         {
             spawnRate -= spawnRateIncrease;
         }       
@@ -72,7 +73,16 @@ public class WaveManager : MonoBehaviour
     private void EnemyKilled(object[] obj)
     {
         enemyCounter--;
-        SpawnEnemy();
+    }
+    void StopSpawn(object[] obj)
+    {
+        canSpawn = false;
+        StartCoroutine(RestarSpawner(10));
+    }
+    IEnumerator RestarSpawner(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canSpawn = true;
     }
 }
 

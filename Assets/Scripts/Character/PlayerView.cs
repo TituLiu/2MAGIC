@@ -8,7 +8,8 @@ public class PlayerView : MonoBehaviour
     {
         Fire,
         Water,
-        Ice
+        Ice,
+        BlackHole
     }
     public PlayerElement currentElement;
     [SerializeField] MeshRenderer[] playerMr;
@@ -44,6 +45,13 @@ public class PlayerView : MonoBehaviour
                 {
                     player.material.color = Color.cyan;
                     player.material.SetColor("_EmissionColor", Color.cyan);
+                }
+                break;
+            case PlayerElement.BlackHole:
+                foreach (var player in playerMr)
+                {
+                    player.material.color = Color.black;
+                    player.material.SetColor("_EmissionColor", Color.black);
                 }
                 break;
             default:

@@ -38,8 +38,9 @@ public class FireBullet : BulletFather
                 }
             }
         }
+        Reset();
     }
-    protected override void Reset(params object[] parameters)
+    public override void Reset(params object[] parameters)
     {
         base.Reset();
         particlesOn = false;

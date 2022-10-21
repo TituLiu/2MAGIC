@@ -107,15 +107,10 @@ public class Enemy : MonoBehaviour, IDamagable
             {
                 EventManager.Instance.Trigger("OnEnemyKilled");
                 EventManager.Instance.Trigger("OnEnemyDeath", 10);
-
             }
         }
     }
     protected virtual void BlackHoleAbsorved(params object[] parameters) { }
-    IEnumerator WaitForDeath()
-    {
-        yield return new WaitForSeconds(2);      
-    }
     public void Damage(int damageTaken, Element elem)
     {
         healthBar.gameObject.SetActive(true);
@@ -162,6 +157,9 @@ public class Enemy : MonoBehaviour, IDamagable
                 {
                     life -= damageTaken;
                 }
+                break;
+            case Element.BlackHole:
+                life = 0;
                 break;
             default:
                 break;

@@ -7,6 +7,7 @@ public class EnemyBullet : BulletFather
     protected override void Start()
     {
         EventManager.Instance.Subscribe("OnRevive", Reset);
+        EventManager.Instance.Subscribe("OnBlackHole", BlackHoleAbsorved);
         _MyDelegate = SimpleMovement;
         mr = meshObject.GetComponent<MeshRenderer>();
 
@@ -28,7 +29,7 @@ public class EnemyBullet : BulletFather
                 break;
         }
     }
-    protected override void Reset(params object[] parameters)
+    public override void Reset(params object[] parameters)
     {
         gameObject.SetActive(false);
     }

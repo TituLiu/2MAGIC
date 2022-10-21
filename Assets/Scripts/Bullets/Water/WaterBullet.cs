@@ -25,7 +25,7 @@ public class WaterBullet : BulletFather
     {
         _watterAttackObj.SetActive(true);
     }
-    protected override void Reset(params object[] parameters)
+    public override void Reset(params object[] parameters)
     {
         base.Reset();
         _watterAttackObj.SetActive(false);

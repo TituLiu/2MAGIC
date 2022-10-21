@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072522432578994343}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.45, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3072522433394931704}
@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 3072522433394931711}
   - component: {fileID: 3072522433394931710}
   - component: {fileID: 3072522433394931709}
+  - component: {fileID: 1257460948098984458}
+  - component: {fileID: 6667749119221958235}
   m_Layer: 22
   m_Name: BlackHole
   m_TagString: Untagged
@@ -106,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072522433394931708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.95, y: 5.72, z: 55.3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children:
   - {fileID: 3072522432578994336}
@@ -126,12 +128,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c3cfd6a95d7644d9243269c8a18494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 70
-  enemiesMask:
+  _speed: 30
+  _maxForce: 2
+  _radius: 100
+  _arriveRadius: 20
+  _aborveForceToCenter: 30
+  _aborveForceToRight: 10
+  _implotionTime: 5
+  _enemiesMask:
     serializedVersion: 2
     m_Bits: 2048
-  aborveForceToCenter: 20
-  aborveForceToRight: 25
+  _enemiesBulletMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  _targetDir: {x: 0, y: 4, z: 70}
+  _viewRange: 1
 --- !u!33 &3072522433394931711
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -191,6 +202,41 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1257460948098984458
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072522433394931708}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
+--- !u!95 &6667749119221958235
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3072522433394931708}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f95c213551aff91428499d79b4e50e76, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3072522433664932380
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,13 +262,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3072522433664932380}
-  m_LocalRotation: {x: 0.7088816, y: 0, z: 0, w: 0.7053276}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3072522433394931704}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90.287994, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &3072522433664932383
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -238,7 +284,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -1056,7 +1102,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1109,7 +1155,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2

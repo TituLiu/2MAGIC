@@ -31,24 +31,21 @@ public class PlayerController : MonoBehaviour, ISubscriber
     void PlayerAxis()
     {   
         float x = Input.GetAxis(model.firstPlayerHorizontalAxis);
-        float z = Input.GetAxis(model.firstPlayerVerticalAxis);
 
-        if (x != 0 || z != 0)
+        if (x != 0)
         {
-            Movement(x, z);
+            Movement(x);
         }
         else
         {
             rb.velocity = Vector3.zero;
         }
     }
-    public void Movement(float x, float z)
+    public void Movement(float x)
     {
-        //Vector3 movedir = new Vector3(x * model.movementSpeed, 0, 0);
-        float movedir = x * model.movementSpeed;
+        float movedir = x * 0.5f;
         float newMovedir = Mathf.Clamp(movedir, -model.maxMovementSpeed, model.maxMovementSpeed);
-        //transform.position += movedir * model.movementSpeed * Time.deltaTime;
-        rb.velocity = new Vector3(newMovedir, 0 ,0);
+        rb.velocity = new Vector3(movedir, 0 ,0);
     }
     public void SpeedPowerUp(float speed, float duration)
     {

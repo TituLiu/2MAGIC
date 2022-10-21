@@ -7,11 +7,15 @@ public class GameplayManager : MonoBehaviour, IPublisher
     [SerializeField] DropSystem dropSyst;
     [SerializeField] Life playerLife;
     [SerializeField] PlayerController playerController;
+    [SerializeField] PlayerView playerView;
+    [SerializeField] Barrier barrier;
 
     List<ISubscriber> _subscriber = new List<ISubscriber>();
     public float killStreak = 0;
     public float survivedTime = 0;
     public static GameplayManager Instance { get; private set; }
+
+    EnumElement element;
 
     private void Awake()
     {
@@ -24,11 +28,16 @@ public class GameplayManager : MonoBehaviour, IPublisher
     }
     void Start()
     {
+        element = GetComponent<EnumElement>();
         EventManager.Instance.Subscribe("OnEnemyKilled", KillStreak);
         EventManager.Instance.Subscribe("OnRevive", Revive);
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PickUp_BlackHole();
+        }
         survivedTime += 1 * Time.deltaTime;
     }
     private void KillStreak(params object[] parameters)
@@ -57,7 +66,8 @@ public class GameplayManager : MonoBehaviour, IPublisher
     }
     public void PickUp_BlackHole()
     {
-        Debug.Log("BlackHole");
+        barrier.ChangeElement(element);
+        playerView.ChangeElement(element);
     }
     #endregion
     public void Revive(params object [] parameters)
